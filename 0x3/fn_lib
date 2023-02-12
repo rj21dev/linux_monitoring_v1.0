@@ -1,0 +1,38 @@
+#!/bin/bash
+
+validator() {
+        if ! [[ $1 =~ ^[1-6]$ ]] ||
+                ! [[ $2 =~ ^[1-6]$ ]] ||
+                ! [[ $3 =~ ^[1-6]$ ]] ||
+                ! [[ $4 =~ ^[1-6]$ ]]; then
+                echo "Error: Input color [1-6]"
+                exit 1
+        fi
+        if [ $1 -eq $2 ] || [ $3 -eq $4 ]; then
+                echo "Error: BG_COLOR can't be equal FONT_COLOR"
+                exit 1
+        fi
+}
+
+replace_color() {
+        case $1 in
+                1) return 7 ;;
+                2) return 1 ;;
+                3) return 2 ;;
+                4) return 4 ;;
+                5) return 5 ;;
+                6) return 0 ;;
+        esac
+}
+
+set_colors() {
+        replace_color $1
+        KEY_BG="\033[4$?m"
+        replace_color $2
+        KEY_FONT="\033[3$?m"
+        replace_color $3
+        VAL_BG="\033[4$?m"
+        replace_color $4
+        VAL_FONT="\033[3$?m"
+	NC="\033[0m"
+}

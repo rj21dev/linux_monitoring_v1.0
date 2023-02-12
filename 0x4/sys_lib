@@ -1,0 +1,21 @@
+#!/bin/bash
+
+system_research() {
+	echo -e "${KEY_BG}${KEY_FONT}HOSTNAME\t= ${VAL_BG}${VAL_FONT}$(hostname)${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}TIMEZONE\t= ${VAL_BG}${VAL_FONT}$(cat /etc/timezone) UTC $(date +%z)${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}USER\t\t= ${VAL_BG}${VAL_FONT}$(whoami)${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}OS\t\t= ${VAL_BG}${VAL_FONT}$(cat /etc/issue | awk '{printf $1" "$2" "$3}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}DATE\t\t= ${VAL_BG}${VAL_FONT}$(date +"%d %B %Y %H:%M:%S")${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}UPTIME\t\t= ${VAL_BG}${VAL_FONT}$(uptime | awk '{printf $3}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}UPTIME_SEC\t= ${VAL_BG}${VAL_FONT}$(cat /proc/uptime | awk '{printf("%d sec", $1)}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}IP\t\t= ${VAL_BG}${VAL_FONT}$(hostname -I)${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}MASK\t\t= ${VAL_BG}${VAL_FONT}$(ifconfig | grep $(hostname -I) | awk '{printf $4}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}GATEWAY\t\t= ${VAL_BG}${VAL_FONT}$(route | awk 'NR==4{printf $1}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}RAM_TOTAL\t= ${VAL_BG}${VAL_FONT}$(free | awk 'NR==2{printf("%.3f Gb", $2/1024/1024)}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}RAM_USED\t= ${VAL_BG}${VAL_FONT}$(free | awk 'NR==2{printf("%.3f Gb", $3/1024/1024)}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}RAM_FREE\t= ${VAL_BG}${VAL_FONT}$(free | awk 'NR==2{printf("%.3f Gb", $4/1024/1024)}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}SPACE_ROOT\t= ${VAL_BG}${VAL_FONT}$(df /root | awk 'NR==2{printf("%.2f Mb", $2/1024)}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}SPACE_ROOT_USED\t= ${VAL_BG}${VAL_FONT}$(df /root | awk 'NR==2{printf("%.2f Mb", $3/1024)}')${NC}"
+	echo -e "${KEY_BG}${KEY_FONT}SPACE_ROOT_FREE\t= ${VAL_BG}${VAL_FONT}$(df /root | awk 'NR==2{printf("%.2f Mb", $4/1024)}')${NC}"
+}
+
